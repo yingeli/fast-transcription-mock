@@ -11,15 +11,14 @@ locale = os.environ.get("LOCALE", "en-US")
 delay_seconds = os.environ.get("DELAY_SECONDS", 45)
 speech_service_key = os.environ.get("SPEECH_SERVICE_KEY")
 
-transcription_result = ""
-
 app = FastAPI()
 
 @app.post("/speechtotext/v3.2_internal.1/syncTranscriptions")
 def transcript(payload = Body(...), ocp_apim_subscription_key: Annotated[str | None, Header()] = None):
-    global transcription_result
-    if transcription_result == "":
+    transcription_result = os.environ.get("TRANSCRIPTION_RESULT")
+    if transcription_result is None:
         transcription_result = call_service()
+        os.environ.set("TRANSCRIPTION_RESULT", transcription_result)
     else:
         time.sleep(delay_seconds)
     return transcription_result
