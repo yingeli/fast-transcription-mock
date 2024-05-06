@@ -30,9 +30,11 @@ with requests.get(audio_uri, stream=True) as resp:
         response.raise_for_status()
         transcription_result = response.json()
 
+print("transcription_result: {}".format(transcription_result))
+
 app = FastAPI()
 
-@app.post("/speechtotext/v3.2_internal.1/synctranscriptions")
+@app.post("/speechtotext/v3.2_internal.1/syncTranscriptions")
 def transcript(payload = Body(...), ocp_apim_subscription_key: Annotated[str | None, Header()] = None):
     time.sleep(delay_seconds)
     return transcription_result
