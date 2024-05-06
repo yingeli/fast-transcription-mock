@@ -33,13 +33,12 @@ start_time = time.time()
 
 response = transcript(audio_uri, definition, key) 
 
-end_time = time.time()
-elapsed_time = end_time - start_time
-print("Time elapsed: {} secs".format(elapsed_time))
-
 response.raise_for_status()
 print("Response: {}".format(response))
 
 json = response.json()
-
 print("Response json: {}".format(json))
+
+end_time = time.time()
+elapsed_time = end_time - start_time
+print("Time elapsed: {} secs".format(elapsed_time))
